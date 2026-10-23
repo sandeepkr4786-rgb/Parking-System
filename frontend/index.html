@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101a2b">
+  <title>Parkwise | Parking operations</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Parkwise home">
+        <span class="brand-mark">P</span><span>parkwise</span>
+      </a>
+      <p class="nav-label">WORKSPACE</p>
+      <a class="nav-link active" href="#overview"><span>▦</span> Overview</a>
+      <a class="nav-link" href="#lots"><span>▤</span> Parking lots</a>
+      <a class="nav-link" href="#activity"><span>↗</span> Activity</a>
+      <div class="sidebar-bottom">
+        <div class="operator-avatar">OP</div>
+        <div><strong>Parking operator</strong><small>Operations team</small></div>
+        <span class="online-dot" aria-label="Online"></span>
+      </div>
+    </aside>
+
+    <main id="overview" class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">PARKING OPERATIONS</p>
+          <h1>Good day <span class="wave">✳</span></h1>
+          <p class="muted">Here’s what’s happening across your parking network.</p>
+        </div>
+        <div class="topbar-right">
+          <span id="connection-badge" class="live-badge demo-mode"><i></i> Connecting…</span>
+          <button id="refresh-button" class="icon-button" type="button" aria-label="Refresh dashboard">↻</button>
+        </div>
+      </header>
+
+      <section class="metrics-grid" aria-label="Today's summary">
+        <article class="metric-card">
+          <div class="metric-icon blue">⌖</div><p>Vehicles parked</p>
+          <strong id="vehicles-parked">—</strong><small>Across all parking lots</small>
+        </article>
+        <article class="metric-card">
+          <div class="metric-icon green">₹</div><p>Revenue today</p>
+          <strong id="revenue-today">—</strong><small>Completed parking sessions</small>
+        </article>
+        <article class="metric-card">
+          <div class="metric-icon purple">◷</div><p>Average stay</p>
+          <strong><span id="average-stay">—</span><em> hrs</em></strong><small>For sessions completed today</small>
+        </article>
+        <article class="metric-card">
+          <div class="metric-icon orange">▦</div><p>Available spaces</p>
+          <strong id="available-spaces">—</strong><small id="space-caption">Across all parking lots</small>
+        </article>
+      </section>
+
+      <section id="lots" class="panel lot-panel">
+        <div class="section-heading">
+          <div><p class="eyebrow">NETWORK</p><h2>Parking lots</h2></div>
+          <span id="lot-count" class="count-pill">Loading…</span>
+        </div>
+        <div id="lot-list" class="lot-list" aria-live="polite">
+          <p class="loading-message">Loading parking lots…</p>
+        </div>
+      </section>
+
+      <section class="dashboard-columns">
+        <article class="panel utilization-panel">
+          <div class="section-heading">
+            <div><p class="eyebrow">SPACE PERFORMANCE</p><h2>Hourly utilization</h2></div>
+            <label class="select-wrap">
+              <span class="sr-only">Choose lot for utilization</span>
+              <select id="utilization-lot" aria-label="Choose lot for utilization"></select>
+            </label>
+          </div>
+          <p class="panel-subtitle">Share of total parking capacity in use each hour</p>
+          <div class="chart-wrap">
+            <canvas id="utilization-chart" role="img" aria-label="Hourly parking space utilization chart"></canvas>
+            <p id="chart-empty" class="chart-empty" hidden>No utilization data available.</p>
+          </div>
+          <div class="chart-legend"><span><i></i> Utilization</span><span>Last 24 hours</span></div>
+        </article>
+
+        <article id="activity" class="panel action-panel">
+          <div class="section-heading">
+            <div><p class="eyebrow">QUICK ACTIONS</p><h2>Manage parking</h2></div>
+            <span class="action-symbol">↗</span>
+          </div>
+          <form id="entry-form" class="action-form">
+            <h3>Vehicle entry</h3>
+            <label>Parking lot<select id="entry-lot" name="lot_id" required></select></label>
+            <label>Vehicle number<input name="vehicle_number" maxlength="20" placeholder="e.g. MH 02 AB 1234" required></label>
+            <label>Space type<select name="slot_type" required>
+              <option value="regular">Regular</option><option value="compact">Compact</option>
+              <option value="accessible">Accessible</option><option value="electric">Electric</option>
+            </select></label>
+            <button class="primary-button" type="submit">Assign a space <span>→</span></button>
+          </form>
+          <div class="form-divider"></div>
+          <form id="exit-form" class="exit-form">
+            <div><h3>Vehicle exit</h3><p>₹20 per started hour · minimum 1 hour</p></div>
+            <label class="sr-only" for="exit-vehicle">Vehicle number</label>
+            <div class="exit-row"><input id="exit-vehicle" name="vehicle_number" maxlength="20" placeholder="Vehicle number" required>
+              <button type="submit" aria-label="Check out vehicle">Exit</button></div>
+          </form>
+          <p id="action-message" class="action-message" role="status" aria-live="polite">Connecting to parking server…</p>
+        </article>
+      </section>
+
+      <footer>Parkwise <span>·</span> Parking space, made visible.</footer>
+    </main>
+  </div>
+</body>
+</html>
